@@ -17,7 +17,7 @@ from google.adk.sessions import InMemorySessionService
 from google.genai import types
 
 from models.adapters import create_adapter
-from sources.x_client import Tweet
+from sources.tweepy_client import Tweet
 from kernel.ranker import RankedTweet
 from config import settings
 

@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# social-agent
-Social media agent
-=======
 Let's design and write a social media agent as follows:
 
 X (twitter) platform:
@@ -130,4 +126,3 @@ Use APScheduler cron-style jobs, e.g., 0 9,12,15,18,21 * * * with ±random jitte
 Enforce daily/weekly action caps to stay well within X policies and rate limits (e.g., max 20 replies/day, backoff on HTTP 429).
 
 During dev, run via ADK’s local UI/CLI.
->>>>>>> 6760eef (Initial commit)

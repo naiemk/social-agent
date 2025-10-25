@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -217,4 +216,4 @@ wheels/
 
 # Virtual environments
 .venv
->>>>>>> 6760eef (Initial commit)
+.env

@@ -10,7 +10,7 @@ import random
 from typing import List, Dict, Tuple, Optional
 
 from google.adk.agents import BaseAgent
-from sources.x_client import TwitterClient
+from sources.tweepy_client import TweepyTwitterClient
 from kernel.decider import TweetDecider, TweetDecision
 from kernel.ranker import RankedTweet, SemanticRanker
 from config import settings
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 class ThreadAgent(BaseAgent):
     """Agent responsible for analyzing conversation threads."""
     
-    def __init__(self, twitter_client: TwitterClient = None, 
+    def __init__(self, twitter_client: TweepyTwitterClient = None, 
                  decider: TweetDecider = None, ranker: SemanticRanker = None):
         """Initialize the thread agent.
         
@@ -31,7 +31,7 @@ class ThreadAgent(BaseAgent):
             ranker: Semantic ranker instance
         """
         super().__init__(name="thread_agent", description="Analyzes conversation threads")
-        self.twitter_client = twitter_client or TwitterClient()
+        self.twitter_client = twitter_client or TweepyTwitterClient()
         self.decider = decider or TweetDecider()
         self.ranker = ranker or SemanticRanker()
         

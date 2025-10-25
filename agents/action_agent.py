@@ -11,7 +11,7 @@ from typing import List, Dict, Tuple, Optional
 from datetime import datetime, timedelta
 
 from google.adk.agents import BaseAgent
-from sources.x_client import TwitterClient
+from sources.tweepy_client import TweepyTwitterClient
 from kernel.decider import TweetDecision
 from kernel.ranker import RankedTweet
 from config import settings
@@ -22,14 +22,14 @@ logger = logging.getLogger(__name__)
 class ActionAgent(BaseAgent):
     """Agent responsible for executing social media actions."""
     
-    def __init__(self, twitter_client: TwitterClient = None):
+    def __init__(self, twitter_client: TweepyTwitterClient = None):
         """Initialize the action agent.
         
         Args:
             twitter_client: Twitter client instance
         """
         super().__init__(name="action_agent", description="Executes social media actions")
-        self.twitter_client = twitter_client or TwitterClient()
+        self.twitter_client = twitter_client or TweepyTwitterClient()
         
         # Track daily action limits
         self.daily_likes = 0

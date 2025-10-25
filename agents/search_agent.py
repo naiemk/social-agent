@@ -9,7 +9,7 @@ import logging
 from typing import List, Dict, Optional
 
 from google.adk.agents import BaseAgent
-from sources.x_client import TwitterClient, SearchResult
+from sources.tweepy_client import TweepyTwitterClient, SearchResult
 from kernel.ranker import SemanticRanker, RankedTweet
 from config import settings
 
@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 class SearchAgent(BaseAgent):
     """Agent responsible for searching and ranking tweets."""
     
-    def __init__(self, twitter_client: TwitterClient = None, ranker: SemanticRanker = None):
+    def __init__(self, twitter_client: TweepyTwitterClient = None, ranker: SemanticRanker = None):
         """Initialize the search agent.
         
         Args:
@@ -27,7 +27,7 @@ class SearchAgent(BaseAgent):
             ranker: Semantic ranker instance
         """
         super().__init__(name="search_agent", description="Searches and ranks tweets")
-        self.twitter_client = twitter_client or TwitterClient()
+        self.twitter_client = twitter_client or TweepyTwitterClient()
         self.ranker = ranker or SemanticRanker()
         
     def search_for_term(self, search_term: str, max_results: int = None) -> List[RankedTweet]:

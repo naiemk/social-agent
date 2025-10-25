@@ -18,7 +18,7 @@ except ImportError:
     SentenceTransformer = None
     np = None
 
-from sources.x_client import Tweet
+from sources.tweepy_client import Tweet
 from config import settings
 
 logger = logging.getLogger(__name__)

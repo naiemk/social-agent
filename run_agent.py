@@ -87,8 +87,8 @@ def validate_setup():
     
     # Test Twitter API connection
     try:
-        from sources.x_client import TwitterClient
-        client = TwitterClient()
+        from sources.tweepy_client import TweepyTwitterClient
+        client = TweepyTwitterClient()
         if client.validate_credentials():
             logger.info("✓ Twitter API connection successful")
         else:

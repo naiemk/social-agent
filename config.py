@@ -6,17 +6,26 @@ and sensible defaults. All configuration is validated and typed using Pydantic.
 """
 
 import os
+import logging
 from typing import List, Optional
 from pydantic import BaseModel, Field, validator
 from pydantic_settings import BaseSettings
+
+logger = logging.getLogger(__name__)
 
 
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
     
-    # Twitter/X API Configuration
+    # Twitter/X API Configuration (Auth v2 with Bearer Token - Primary)
     twitter_bearer_token: str = Field(..., env="TWITTER_BEARER_TOKEN")
     twitter_user_id: str = Field(..., env="TWITTER_USER_ID")
+    
+    # Tweepy Configuration (for OAuth 1.0a authentication - Optional)
+    twitter_api_key: Optional[str] = Field(None, env="TWITTER_API_KEY")
+    twitter_api_secret: Optional[str] = Field(None, env="TWITTER_API_SECRET")
+    twitter_access_token: Optional[str] = Field(None, env="TWITTER_ACCESS_TOKEN")
+    twitter_access_token_secret: Optional[str] = Field(None, env="TWITTER_ACCESS_TOKEN_SECRET")
     
     # Model Configuration
     model_name: str = Field("gemini-2.0-flash-exp", env="MODEL_NAME")
@@ -102,11 +111,25 @@ def validate_required_credentials():
     """Validate that all required credentials are present."""
     missing = []
     
-    if not settings.twitter_bearer_token:
-        missing.append("TWITTER_BEARER_TOKEN")
+    # Check for Twitter authentication (Bearer Token is primary, OAuth 1.0a is optional)
+    has_bearer_token = bool(settings.twitter_bearer_token)
+    has_oauth_credentials = all([
+        settings.twitter_api_key,
+        settings.twitter_api_secret,
+        settings.twitter_access_token,
+        settings.twitter_access_token_secret
+    ])
+    
+    # Bearer token is required for Auth v2
+    if not has_bearer_token:
+        missing.append("TWITTER_BEARER_TOKEN (required for Auth v2)")
     
     if not settings.twitter_user_id:
         missing.append("TWITTER_USER_ID")
+    
+    # OAuth credentials are optional - only needed for write operations
+    if not has_oauth_credentials:
+        logger.warning("OAuth credentials not provided - write operations (like, reply) will be limited")
     
     try:
         get_model_api_key()

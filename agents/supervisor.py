@@ -10,7 +10,7 @@ import time
 from typing import List, Dict, Optional, Tuple
 
 from google.adk.agents import BaseAgent
-from sources.x_client import TwitterClient
+from sources.tweepy_client import TweepyTwitterClient
 from kernel.ranker import SemanticRanker, RankedTweet
 from kernel.decider import TweetDecider, TweetDecision
 from agents.search_agent import SearchAgent
@@ -30,7 +30,7 @@ class SupervisorAgent(BaseAgent):
         super().__init__(name="supervisor_agent", description="Orchestrates social media automation")
         
         # Initialize components
-        self.twitter_client = TwitterClient()
+        self.twitter_client = TweepyTwitterClient()
         self.ranker = SemanticRanker()
         self.decider = TweetDecider()
         
